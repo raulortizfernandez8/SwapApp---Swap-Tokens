@@ -4,81 +4,71 @@ A minimal Solidity smart contract that allows users to swap ERC20 tokens through
 
 The SwapApp contract provides a simple interface for token swaps. Its main features are:
 
-Router integration
+- Router integration
 
-The contract stores the address of a Uniswap V2 router (addressV2Router02) provided at deployment.
+- The contract stores the address of a Uniswap V2 router (addressV2Router02) provided at deployment.
 
-All swap operations are routed through this address.
+- All swap operations are routed through this address.
 
-Token transfer and approval
+- Token transfer and approval.
 
-When a user calls the swap function, the contract first transfers the input token from the user to itself.
+- When a user calls the swap function, the contract first transfers the input token from the user to itself.
 
-It then approves the router to spend those tokens on behalf of the contract.
+- It then approves the router to spend those tokens on behalf of the contract.
 
-Swap execution
+- Uses the swapExactTokensForTokens function from the V2 router.
 
-Uses the swapExactTokensForTokens function from the V2 router.
+- Tokens are swapped following a path specified by the user (e.g., USDT → DAI).
 
-Tokens are swapped following a path specified by the user (e.g., USDT → DAI).
+- The resulting tokens are sent directly to the caller’s address.
 
-The resulting tokens are sent directly to the caller’s address.
+- After every swap, the contract emits a SwapTokens event containing:
 
-Event emission
+-- Input token
 
-After every swap, the contract emits a SwapTokens event containing:
+-- Output token
 
-Input token
+-- Input amount
 
-Output token
-
-Input amount
-
-Final output amount
+-- Final output amount
 
 # 🔹 Testing with Foundry
 
 The project includes tests that fork Arbitrum mainnet to simulate real swaps. Key points:
 
-Deployment test
+- Deployment test
 
-Verifies that the contract is initialized with the correct router address.
+   Verifies that the contract is initialized with the correct router address.
 
-Swap test
+- Swap test
 
-Impersonates a real account funded with USDT on Arbitrum.
+   Impersonates a real account funded with USDT on Arbitrum.
 
-Approves the contract to spend USDT.
+   Approves the contract to spend USDT.
 
-Executes a swap from USDT (6 decimals) to DAI (18 decimals).
+   Executes a swap from USDT (6 decimals) to DAI (18 decimals).
 
-Checks that:
+- Checks that:
 
-The user’s USDT balance decreases by the input amount.
+   The user’s USDT balance decreases by the input amount.
 
-The user’s DAI balance increases after the swap.
+   The user’s DAI balance increases after the swap.
 
 # 🔹 How to Run the Tests
 
-Requirements:
+- Requirements:
 
-Foundry
- installed.
+   Foundry installed.
 
-An Arbitrum RPC endpoint.
+- An Arbitrum RPC endpoint.
 
-Run the tests with:
+- Run the tests with:
 
-forge test -vvvv \
-  --fork-url https://arb1.arbitrum.io/rpc \
-  --match-test testSwapToken
+   forge test -vvvv --fork-url https://arb1.arbitrum.io/rpc --match-test testSwapToken
 
+   --fork-url: forks Arbitrum mainnet for testing with real liquidity
 
--vvvv: detailed logs
-
---fork-url: forks Arbitrum mainnet for testing with real liquidity
-
---match-test: runs only the swap test
+   --match-test: runs only the swap test
 
 # 📌 Key Characteristics
 
