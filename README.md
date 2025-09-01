@@ -24,13 +24,13 @@ The SwapApp contract provides a simple interface for token swaps. Its main featu
 
 - After every swap, the contract emits a SwapTokens event containing:
 
--- Input token
+   -- Input token
 
--- Output token
+   -- Output token
 
--- Input amount
+   -- Input amount
 
--- Final output amount
+   -- Final output amount
 
 # 🔹 Testing with Foundry
 
