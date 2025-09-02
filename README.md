@@ -54,6 +54,9 @@ The project includes tests that fork Arbitrum mainnet to simulate real swaps. Ke
 
    The user’s DAI balance increases after the swap.
 
+  <img width="590" height="129" alt="image" src="https://github.com/user-attachments/assets/77084137-3688-4963-ae54-a3136895b9e0" />
+
+
 # 🔹 How to Run the Tests
 
 - Requirements:
